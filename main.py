@@ -21,8 +21,8 @@ parser.add_argument('--mode', type=str, default='GCN')
 parser.add_argument('--n_epoch', type=int, default=200)
 parser.add_argument('--n_hid',   type=int, default=256)
 parser.add_argument('--n_inp',   type=int, default=256)
-parser.add_argument('--clip',    type=int, default=1.0) 
-parser.add_argument('--max_lr',  type=float, default=1e-3) 
+parser.add_argument('--clip',    type=int, default=1.0)
+parser.add_argument('--max_lr',  type=float, default=1e-3)
 
 args = parser.parse_args()
 
@@ -62,7 +62,7 @@ def train(model, G):
                 best_test_acc = test_acc
             print('Epoch: %d LR: %.5f Loss %.4f, Train Acc %.4f, Val Acc %.4f (Best %.4f), Test Acc %.4f (Best %.4f)' % (
                 epoch,
-                optimizer.param_groups[0]['lr'], 
+                optimizer.param_groups[0]['lr'],
                 loss.item(),
                 train_acc.item(),
                 val_acc.item(),
@@ -117,7 +117,7 @@ for ntype in G.ntypes:
     node_dict[ntype] = len(node_dict)
 for etype in G.etypes:
     edge_dict[etype] = len(edge_dict)
-    G.edges[etype].data['id'] = torch.ones(G.number_of_edges(etype), dtype=torch.long) * edge_dict[etype] 
+    G.edges[etype].data['id'] = torch.ones(G.number_of_edges(etype), dtype=torch.long) * edge_dict[etype]
 
 # Random initialize input feature
 for ntype in G.ntypes:
