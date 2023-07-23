@@ -185,9 +185,10 @@ class GCN(nn.Module):
         # create layers
         self.layer1 = dglnn.GraphConv(in_size, hidden_size)
         self.layer2 = dglnn.GraphConv(hidden_size, out_size)
+        self.features = nn.Parameter(G.ndata['feat'].float())
 
     def forward(self, G, out_key):
-        input = G.ndata['feat'].float()
+        input = self.features.float()
         h_dict = self.layer1(G, input)
         h_dict = F.relu(h_dict)
         h_dict = self.layer2(G, h_dict)
