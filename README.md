@@ -1,2 +1,2 @@
-# DO-WE-NEED-COMPLICATED-MODELS-FOR-HETEROGENEOUS-GRAPH-NEURAL-NETWORK
+# BG-HGNN: Toward Scalable and Efficient Heterogeneous Graph Neural Network
 Algorithm for converting a heterogeneous graph to a homogeneous graph
