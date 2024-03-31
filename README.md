@@ -30,7 +30,7 @@ We have used 8 different datasets for node classification:
 
 To test BG-HGNN and other baselines for node classification, run:
   ```shell
-  python NP/main.py -model your_model_name -dataset your_dataset
+  python NC/main.py -model your_model_name -dataset your_dataset
   ```
 
 ### Experiment 2: Link Prediction
