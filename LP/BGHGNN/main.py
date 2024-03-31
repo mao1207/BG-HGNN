@@ -144,24 +144,19 @@ def run_model_DBLP(args):
             dim = features_list[i].shape[0]
             features_list[i] = torch.rand((dim, 512)).to(device)
             
-    # 初始化一个空的特征列表
     total_width = sum(features.shape[1] for features in features_list)
     cumulative_widths = [0] + list(torch.cumsum(torch.tensor([features.shape[1] for features in features_list]), dim=0))
     padded_features = []
 
-    # 对每种类型的节点特征进行填充
     for i, features in enumerate(features_list):
-        print("======================")
-        print(features)
-        # 计算每个特征的前后填充
         features = features.to_dense()
         padding_before = torch.zeros(features.shape[0], cumulative_widths[i]).to(device)
         padding_after = torch.zeros(features.shape[0], total_width - cumulative_widths[i+1]).to(device)
-        # 创建填充后的特征
+
         padded_feature = torch.cat([padding_before, features, padding_after], dim=1)
         padded_features.append(padded_feature)
 
-    # 将特征在行上拼接
+
     concatenated_features = torch.cat(padded_features, dim=0)
     print(concatenated_features)
 
@@ -296,7 +291,7 @@ def run_model_DBLP(args):
         # training loop
         net.train()
         early_stopping = EarlyStopping(patience=args.patience, verbose=True,
-                                       save_path='/local/scratch/hcui25/Project/xin/H2H/LP/H2H/checkpoint/rgcn_checkpoint_{}_{}.pt'.format(args.dataset, args.num_layers))
+                                       save_path='/local/scratch/hcui25/Project/xin/H2H/LP/BGHGNN/checkpoint/rgcn_checkpoint_{}_{}.pt'.format(args.dataset, args.num_layers))
         loss_func = nn.BCELoss()
     for epoch in range(args.epoch):
         train_pos_head_full = np.array([])
@@ -400,7 +395,7 @@ def run_model_DBLP(args):
     for test_edge_type in dl.links_test['data'].keys():
         # testing with evaluate_results_nc
         net.load_state_dict(torch.load(
-            '/local/scratch/hcui25/Project/xin/H2H/LP/H2H/checkpoint/rgcn_checkpoint_{}_{}.pt'.format(args.dataset, args.num_layers)))
+            '/local/scratch/hcui25/Project/xin/H2H/LP/BGHGNN/checkpoint/rgcn_checkpoint_{}_{}.pt'.format(args.dataset, args.num_layers)))
         net.eval()
         test_logits = []
         with torch.no_grad():
